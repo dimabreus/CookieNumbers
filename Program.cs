@@ -21,7 +21,7 @@ public struct CookInt
         variants = new Dictionary<char, string[]>
         {
         { 'c', new[] { "c", "C", "č", "Č" } }, // cCčČ
-        { 'o', new[] { "o", "O", "ǒ", "Ǒ" } }, // oOǒǑǩǨ 
+        { 'o', new[] { "o", "O", "ǒ", "Ǒ" } }, // oOǒǑ
         { 'k', new[] { "k", "K", "ǩ", "Ǩ" } }, // kKǩǨ
         { 'i', new[] { "i", "I", "ǐ", "Ǐ" } }, // iIǐǏ
         { 'e', new[] { "e", "E", "ě", "Ě" } }  // eEěĚ
@@ -47,6 +47,14 @@ public struct CookInt
     public static implicit operator CookInt(ulong value)
     {
         return new CookInt(value);
+    }
+
+    public static implicit operator CookInt(string cookieString)
+    {
+        if (variants == null)
+            new CookInt(0);
+
+        return new CookInt(FromBytes(StringToBytes(cookieString)));
     }
 
     public static explicit operator ulong(CookInt cookInt)
@@ -296,7 +304,7 @@ public struct CookInt
 
 class Program
 {
-    private static CookInt myCookiesCount = 0;
+    private static CookInt myCookiesCount = "cookiĚ\ncOOKǏE";
 
     private static void Main()
     {
